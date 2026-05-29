@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm --cwd frontend run build:production",
+  "buildCommand": "cd frontend && npm install && npm run build:production",
   "outputDirectory": "frontend/dist/svh-frontend",
   "cleanUrls": true,
   "trailingSlash": false,
@@ -10,7 +10,7 @@
     }
   ],
   "env": {
-    "NG_APP_API_URL": "@api_url",
+    "NG_APP_API_URL": "http://localhost:8080/api",
     "NG_APP_ENV": "production"
   }
 }
