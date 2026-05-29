@@ -1,7 +1,7 @@
 {
-  "buildCommand": "cd frontend && npm install --legacy-peer-deps --no-audit && npm run build:production",
+  "buildCommand": "cd frontend && npm install --legacy-peer-deps && npm run build:production",
   "outputDirectory": "frontend/dist/svh-frontend",
-  "installCommand": "npm install --legacy-peer-deps --no-audit",
+  "installCommand": "npm install",
   "env": {
     "NG_APP_API_URL": "http://localhost:8080/api",
     "NG_APP_ENV": "production"
