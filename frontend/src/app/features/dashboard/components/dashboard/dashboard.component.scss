@@ -1,0 +1,56 @@
+// Dashboard styles
+.dashboard-container {
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.navbar {
+  background-color: #667eea;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  h1 {
+    margin: 0;
+  }
+
+  .user-info {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    span {
+      font-weight: 500;
+    }
+
+    .btn-logout {
+      background-color: white;
+      color: #667eea;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+
+  h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+  }
+}
+

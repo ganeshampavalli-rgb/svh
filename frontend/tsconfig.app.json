@@ -1,0 +1,2 @@
+{"compilerOptions": {"module": "ES2022", "target": "ES2022", "useDefineForClassFields": false}, "extends": "./tsconfig.json", "files": ["src/main.ts"], "include": ["src/**/*.d.ts"]}
+

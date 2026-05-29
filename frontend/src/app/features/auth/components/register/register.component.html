@@ -1,0 +1,94 @@
+<div class="register-container">
+  <div class="register-card">
+    <h1>Sri Venkateswara Home Tutions</h1>
+    <h2>Create Your Account</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            formControlName="firstName"
+            class="form-control"
+            placeholder="First name"
+            [class.is-invalid]="firstName?.invalid && firstName?.touched"
+          />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            formControlName="lastName"
+            class="form-control"
+            placeholder="Last name"
+            [class.is-invalid]="lastName?.invalid && lastName?.touched"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+          placeholder="Enter your email"
+          [class.is-invalid]="email?.invalid && email?.touched"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number (Optional)</label>
+        <input
+          type="tel"
+          id="phoneNumber"
+          formControlName="phoneNumber"
+          class="form-control"
+          placeholder="Phone number"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          placeholder="Enter password (min 8 characters)"
+          [class.is-invalid]="password?.invalid && password?.touched"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="role">Account Type</label>
+        <select id="role" formControlName="role" class="form-control">
+          <option value="STUDENT">Student</option>
+          <option value="INSTRUCTOR">Instructor</option>
+        </select>
+      </div>
+
+      <div class="error-message" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="registerForm.invalid || loading"
+      >
+        {{ loading ? 'Creating Account...' : 'Register' }}
+      </button>
+    </form>
+
+    <p class="login-link">
+      Already have an account?
+      <a routerLink="/auth/login">Login here</a>
+    </p>
+  </div>
+</div>
+

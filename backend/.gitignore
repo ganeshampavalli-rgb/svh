@@ -1,0 +1,51 @@
+# Maven
+target/
+.m2/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versioned
+pom.xml.next
+pom.xml.bak
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.classpath
+.project
+.settings/
+*.class
+
+# Spring Boot
+*.log
+logs/
+*.pid
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Database
+*.db
+*.sqlite
+
+# Temp files
+*.tmp
+*.bak
+~*
+
+# Build
+bin/
+out/
+

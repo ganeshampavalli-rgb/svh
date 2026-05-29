@@ -1,0 +1,134 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: svh-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - svh-network
+
+  # Auth Service
+  auth-service:
+    build:
+      context: ./backend/auth-service
+      dockerfile: Dockerfile
+    container_name: svh-auth-service
+    ports:
+      - "8081:8081"
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/svh_auth_db
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      JWT_SECRET: your-secret-key-change-in-production-minimum-256-bits
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      CORS_ORIGINS: http://localhost:4200,http://localhost:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - svh-network
+    restart: unless-stopped
+
+  # Course Service
+  course-service:
+    build:
+      context: ./backend/course-service
+      dockerfile: Dockerfile
+    container_name: svh-course-service
+    ports:
+      - "8082:8082"
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/svh_course_db
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      EUREKA_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - svh-network
+    restart: unless-stopped
+
+  # Enrollment Service
+  enrollment-service:
+    build:
+      context: ./backend/enrollment-service
+      dockerfile: Dockerfile
+    container_name: svh-enrollment-service
+    ports:
+      - "8083:8083"
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/svh_enrollment_db
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      EUREKA_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - svh-network
+    restart: unless-stopped
+
+  # Learning Service
+  learning-service:
+    build:
+      context: ./backend/learning-service
+      dockerfile: Dockerfile
+    container_name: svh-learning-service
+    ports:
+      - "8084:8084"
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/svh_learning_db
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      EUREKA_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - svh-network
+    restart: unless-stopped
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./backend/api-gateway
+      dockerfile: Dockerfile
+    container_name: svh-api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      JWT_SECRET: your-secret-key-change-in-production-minimum-256-bits
+    depends_on:
+      - auth-service
+      - course-service
+      - enrollment-service
+      - learning-service
+    networks:
+      - svh-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  svh-network:
+    driver: bridge
+
