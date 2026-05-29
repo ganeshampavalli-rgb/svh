@@ -1,10 +1,14 @@
 import { Routes } from '@angular/router';
+import { HomeComponent } from './features/home/components/home/home.component';
 
 export const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
+    component: HomeComponent
+  },
+  {
+    path: 'home',
+    component: HomeComponent
   },
   {
     path: 'auth',
@@ -19,12 +23,8 @@ export const appRoutes: Routes = [
     loadChildren: () => import('./features/dashboard/dashboard.routes').then(m => m.DASHBOARD_ROUTES)
   },
   {
-    path: 'home',
-    loadChildren: () => import('./features/home/home.routes').then(m => m.HOME_ROUTES)
-  },
-  {
     path: '**',
-    redirectTo: '/home'
+    component: HomeComponent
   }
 ];
 
