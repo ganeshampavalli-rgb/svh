@@ -1,0 +1,17 @@
+{
+  "buildCommand": "npm --cwd frontend run build:production",
+  "outputDirectory": "frontend/dist/svh-frontend",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/:path((?!.*\\.).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "env": {
+    "NG_APP_API_URL": "@api_url",
+    "NG_APP_ENV": "production"
+  }
+}
+
